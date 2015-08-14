@@ -24,61 +24,53 @@ In your project's Gruntfile, add a section named `command_run` to the data objec
 
 ```js
 grunt.initConfig({
-  command_run: {
-    options: {
-      // Task-specific options go here.
+    command_run: {
+        your_target: {
+            options: {
+                getCommand: function(file, dest) {
+                    var commandLine = 'tool ' + file + ' ' + dest;
+                    return commandLine;
+                }
+            },
+            files: ['./path/file'],
+        },
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
 });
 ```
 
 ### Options
 
-#### options.separator
-Type: `String`
-Default value: `',  '`
+#### options.getCommand
+Type: `function`
 
-A string value that is used to do something with whatever.
+Callback function that returns command line which would be executed.
 
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
+##### Parameters:
+* **file**: Path to the file that processing now
+* **dest**: Destination for the file
 
-A string value that is used to do something else with whatever else.
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+#### XSLT templates compilation
 
 ```js
 grunt.initConfig({
-  command_run: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+    command_run: {
+        your_target: {
+            options: {
+                getCommand: function(file, dest) {
+                    var fileName = file.split("/").pop();
+                    return './tools/msxsl.exe ' + file + ' schema.xsl -o ' + dest + fileName;
+                }
+            },
+            files: [{
+                expand: false,
+                src: ['templates/*.*'],
+                dest: 'build/'
+            }],
+        },
     },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  command_run: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
 });
 ```
 
