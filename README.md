@@ -49,6 +49,10 @@ Callback function that returns command line which would be executed.
 * **file**: Path to the file that processing now
 * **dest**: Destination for the file
 
+#### files
+
+Files must be described as usual in Grunt. You can read about it [here](http://gruntjs.com/configuring-tasks#files).
+
 
 ### Usage Examples
 
