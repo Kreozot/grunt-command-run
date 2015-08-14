@@ -1,6 +1,6 @@
 {
   "name": "grunt-command-run",
-  "description": "Grunt plugin for easily run command line tools for your files",
+  "description": "Grunt plugin for easily run command line (CLI) tools for your files",
   "version": "0.1.0",
   "homepage": "https://github.com/Kreozot/grunt-command-run",
   "author": {
@@ -37,6 +37,10 @@
     "grunt": "~0.4.5"
   },
   "keywords": [
-    "gruntplugin"
+    "gruntplugin",
+    "grunt",
+    "cli",
+    "command",
+    "command-line"
   ]
 }
