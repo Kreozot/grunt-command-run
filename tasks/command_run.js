@@ -32,7 +32,6 @@ module.exports = function(grunt) {
 			var filesCount = files.length;
 			var processedFilesCount = 0;
 			files.forEach(function(filepath) {
-				console.log(getCommand);
 				exec(getCommand(filepath, fileGroup.dest),
 					function(error, stdout, stderr) {
 						if (stdout && (stdout.length > 0)) {
