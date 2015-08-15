@@ -49,7 +49,8 @@ module.exports = function(grunt) {
                         } else {
                             return 'mv ' + file + ' ' + dest + '';
                         }
-                    }
+                    },
+                    quiet: true
                 },
                 files: [{
                     expand: false,

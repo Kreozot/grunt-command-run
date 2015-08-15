@@ -42,7 +42,9 @@ grunt.initConfig({
                     var fileName = filepath.split("/").pop();
                     // Return command line for processing the file
                     return './tools/msxsl.exe ' + file + ' schema.xsl -o ' + dest + fileName;
-                }
+                },
+                // Output only errors
+                quiet: true
             },
             // Standart files declaration
             files: [{
@@ -73,5 +75,9 @@ Files must be described as usual in Grunt. You can read about it [here](http://g
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
+If you see any textual errors, please feel free to correct.
+
 ## Release History
-_(Nothing yet)_
+
+* **0.1.1** Quiet mode
+* **0.1.0** First version

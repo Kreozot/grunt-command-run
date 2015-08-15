@@ -12,10 +12,13 @@ module.exports = function(grunt) {
 
 	grunt.registerMultiTask('command_run', 'Grunt plugin for easily run command line tools for your files', function() {
 
-		grunt.log.writeln('Processing started...');
 		var exec = require('child_process').exec;
 		var done = this.async();
-		var getCommand = this.options().getCommand;
+		var options = this.options();
+
+		if (!options.quiet) {
+			grunt.log.writeln('Processing started...');			
+		}
 
 		var fileGroupsCount = this.files.length;
 		var processedGroupsCount = 0;
@@ -32,9 +35,9 @@ module.exports = function(grunt) {
 			var filesCount = files.length;
 			var processedFilesCount = 0;
 			files.forEach(function(filepath) {
-				exec(getCommand(filepath, fileGroup.dest),
+				exec(options.getCommand(filepath, fileGroup.dest),
 					function(error, stdout, stderr) {
-						if (stdout && (stdout.length > 0)) {
+						if (stdout && (stdout.length > 0) && !options.quiet) {
 							grunt.log.writeln('stdout: ' + stdout);
 						}
 						if (stderr && (stderr.length > 0)) {
