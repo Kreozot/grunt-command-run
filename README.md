@@ -1,6 +1,8 @@
 # grunt-command-run
 
-> Grunt plugin for easily run command line tools for your files
+Grunt plugin for easily run command line tools for your files.
+
+Have an external tool and want to process your source file with it? Use this plugin!
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -22,17 +24,32 @@ grunt.loadNpmTasks('grunt-command-run');
 ### Overview
 In your project's Gruntfile, add a section named `command_run` to the data object passed into `grunt.initConfig()`.
 
+
+### Usage Example
+
+XSLT templates compilation:
+
 ```js
 grunt.initConfig({
+    // The task
     command_run: {
-        your_target: {
+        // Your target
+        compile_xslt: {
             options: {
-                getCommand: function(file, dest) {
-                    var commandLine = 'tool ' + file + ' ' + dest;
-                    return commandLine;
+                // Callback function that returns command for processing one of your files
+                getCommand: function(filepath, dest) {
+                    // Do some stuff, e.g. take just filename from relative filepath
+                    var fileName = filepath.split("/").pop();
+                    // Return command line for processing the file
+                    return './tools/msxsl.exe ' + file + ' schema.xsl -o ' + dest + fileName;
                 }
             },
-            files: ['./path/file'],
+            // Standart files declaration
+            files: [{
+                expand: false,
+                src: ['templates/*.*'],
+                dest: 'build/'
+            }],
         },
     },
 });
@@ -46,37 +63,12 @@ Type: `function`
 Callback function that returns command line which would be executed.
 
 ##### Parameters:
-* **file**: Path to the file that processing now
-* **dest**: Destination for the file
+* **filepath**: Path to the file that processing now
+* **dest**: Destination for the file (Depends on "expand" parameter in your files declaration, see below)
 
 #### files
 
 Files must be described as usual in Grunt. You can read about it [here](http://gruntjs.com/configuring-tasks#files).
-
-
-### Usage Examples
-
-#### XSLT templates compilation
-
-```js
-grunt.initConfig({
-    command_run: {
-        your_target: {
-            options: {
-                getCommand: function(file, dest) {
-                    var fileName = file.split("/").pop();
-                    return './tools/msxsl.exe ' + file + ' schema.xsl -o ' + dest + fileName;
-                }
-            },
-            files: [{
-                expand: false,
-                src: ['templates/*.*'],
-                dest: 'build/'
-            }],
-        },
-    },
-});
-```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
